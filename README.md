@@ -1,27 +1,50 @@
+<img src="https://storage.googleapis.com/golden-wind/experts-club/capa-github.svg" />
+
 # Docker.Squid
 
-Proxy server using the Squid application.
+Servidor proxy usando Squid.
 
-## Configuration
+- Imagem no [hub.docker.com](https://hub.docker.com/r/sergiocabral/squid)
+- Comando de única linha para configurar uma VM Linux Debian como servidor Proxy:
+  - `sudo apt update && sudo apt install docker.io -y && sudo docker run -e SQUID_USERS="username1=password1,username2=password2,username3=password3" -e SQUID_LOGIN_MESSAGE="Mensagem de boas-vindas" -e SQUID_ALLOW_UNSECURE="true" -p 80:3128 sergiocabral/squid`
+    - Altere os usuários e senhas.
+    - Defina a mensagem de boas-vindas.
+    - Certifique-se se vai usar mesmo a porta 80.
 
-It is possible to configure user and password authentication through an environment variable.
+## Slides da aula
 
-Or you can ignore environment variables and use the specific setting in the `squid.conf` file.
+![Slide 1](./_assets/Slide01.png)
 
-## Environment Variables
+![Slide 2](./_assets/Slide02.png)
+
+![Slide 3](./_assets/Slide03.png)
+
+![Slide 4](./_assets/Slide04.png)
+
+![Slide 5](./_assets/Slide05.png)
+
+![Slide 6](./_assets/Slide06.png)
+
+## Configuração
+
+É possível configurar usuário e senha através de variáveis de ambiente.
+
+Ou você pode ignorar variáveis de ambiente e usar diretamente o arquivo `squid.conf`.
+
+## Variáveis de ambiente
 
 `SQUID_USERS` = `username1=password1,username2=password2,username3=password3`
 
- - Enter username and password in this format to create credentials for accessing the proxy.
+ - Informe usuário e senha no formato acima para habilitar a autenticação ao servidor proxy.
 
 `SQUID_LOGIN_MESSAGE` = `Your Login Message Here`
 
-- Message (realm) displayed during the login process.
+- Mensagem (realm) exibida durante o processo de login.
 
 `SQUID_ALLOW_UNSECURE` = `true`
 
-- Only `true` value is possible. Sinalize that you allow access to unusual ports.
-- When not informed, or have another value, allows access only to safe ports:
+- Apenas `true` é um valor possível. Sinaliza que é permitido o acesso à portas não usuais.
+- Quando não informado, ou tendo um outro valor, irá permitir apenas as seguintes portas consideradas seguras:
 	- 21, ftp
 	- 70, gopher
 	- 80, http
@@ -33,26 +56,25 @@ Or you can ignore environment variables and use the specific setting in the `squ
 	- 777, multiling http
 	- 1025-65535, unregistered ports
 
-
-## Suggested Directory Volumes
+## Sugestão de diretórios para volumes Docker.
 
 `/etc/squid.templates`
 
-- Use files `/etc/squid.templates/*.template` to make the files in the `/etc/squid.conf` directory with replacement of environment variables with their values.
+- Use os arquivos `/etc/squid.templates/*.template` para criar os arquivos finais em `/etc/squid.conf` com a devida substituição de referências à variáveis de ambiente pelos seus respectivos valores.
 
 `/etc/squid.conf`
 
-- Configuration directory used by the Squid application. All configuration files are here.
+- Diretório de configuração usado pelo Squid. Todos os arquivos de configuração estão aqui.
 
 `/var/log/squid`
 
-- Log files.
+- Arquivos de log.
 
-## Exposed Port
+## Exposição de porta
 
-The default working port for Squid is 3128. But can be modified in the `squid.conf` file.
+A porta padrão do Squid é 3128. Mas pode ser modificada no arquivo `squid.conf`.
 
-## Example for *docker-compose.yml*
+## Exemplo para *docker-compose.yml*
 
 ```
 version: "3.3"
@@ -70,3 +92,16 @@ services:
       - SQUID_LOGIN_MESSAGE=Cabrones Proxy Server
       - SQUID_ALLOW_UNSECURE=true
 ```
+
+## Expert
+
+| [<img src="https://avatars.githubusercontent.com/u/665373?v=4" width="75px;"/>](https://github.com/sergiocabral) |
+| :-: |
+|[sergiocabral.com](https://sergiocabral.com)|
+
+
+
+
+
+
+
